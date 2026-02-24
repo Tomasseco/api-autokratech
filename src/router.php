@@ -48,6 +48,10 @@ switch ($recurso) {
     $headers = function_exists('getallheaders') ? getallheaders() : [];
   
     http_response_code(200);
+    
+    // Probando conexion a la base de datos
+    $pdo = DB::conn(); 
+    
     echo json_encode([
       'ok' => true,
       'mensaje' => 'Esto es lo que me has enviado por curl',
@@ -55,7 +59,8 @@ switch ($recurso) {
       'raw' => $raw,                 // texto exacto recibido
       'json' => $json,               // JSON parseado (array)
       'json_error' => json_last_error_msg(),
-      'headers' => $headers
+      'headers' => $headers,
+      'pdo' => $pdo ? 'conectado' : 'no conectado'
     ], JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
     break;
 
